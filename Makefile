@@ -1,10 +1,15 @@
-NAME			=
+NAME			= ircserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 DEBUG			?=	0
 CPPFLAGS	=	-Iincludes -DDEBUG=$(DEBUG)
 
-SRC			=	
+SRC			=	./main.cpp \
+				./src/Channel.cpp \
+				./src/Client.cpp \
+				./src/CommandHandler.cpp \
+				./src/Server.cpp
+
 OBJS			=	$(SRC:.cpp=.o)
 
 RM			=	rm -f
