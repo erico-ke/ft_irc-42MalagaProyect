@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:20:39 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/07 16:14:58 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 13:45:29 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << ERROR_COLOR << "Error: " << e.what() << RESET << '\n';
+		std::cerr << ERROR_COLOR << "Error: " << RESET << e.what() << std::endl;
 		return 1;
 	}
 

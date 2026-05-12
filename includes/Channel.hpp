@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 12:39:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 12:44:49 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 13:34:31 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,12 @@ private:
 	int						_userLimit;
 
 public:
-	Channel(void);
+	class invalidConstructorCall : public std::exception
+	{
+	public:
+		const char *what() const throw();
+	};
+	Channel(void){throw Channel::invalidConstructorCall();};
 	Channel(const std::string &name);
 	Channel(const Channel &other);
 	Channel &operator=(const Channel &other);
@@ -43,8 +48,28 @@ public:
 	bool	isMember(Client *client)		const;
 	bool	isEmpty()						const;
 
+	void	addOperator(Client *client);
+	void	removeOperator(Client *client);
+	bool	isOperator(Client *client) const;
+
+	void	addinvite(Client *client);
+	bool	isInvited(Client *client) const;
+
+	void	broadcast(const std::string &msg, Client *exept = NULL);
+
+	std::string	getName()			const;
+    std::string	getTopic()			const;
+    std::string	getKey()			const;
+    bool		isInviteOnly()		const;
+    bool		isTopicRestricted()	const;
+    int			getUserLimit()		const;
+    size_t		getMemberCount()	const;
 	
-	
+	void	setTopic(const std::string &topic);
+	void	setKey(const std::string &key);
+	void	setinviteOnly(bool val);
+	void	setTopicRestricted(bool val);
+	void	setUserLimit(int limit);
 	
 };
 
