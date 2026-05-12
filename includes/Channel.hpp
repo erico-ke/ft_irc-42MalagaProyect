@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 12:39:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 17:32:33 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:30:48 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <vector>
 # include <algorithm>
 # include <iostream>
+# include <sys/socket.h>
 
 class Client;
 
@@ -54,7 +55,7 @@ public:
 	void	removeOperator(Client *client);
 	bool	isOperator(Client *client) const;
 
-	void	addinvite(Client *client);
+	void	addInvite(Client *client);
 	bool	isInvited(Client *client) const;
 
 	void	broadcast(const std::string &msg, Client *exept = NULL);

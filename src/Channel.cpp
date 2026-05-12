@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:37:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 17:45:11 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:30:41 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,29 @@ void	Channel::removeOperator(Client *client)
 	_operators.erase(std::remove(_operators.begin(), _operators.end(), client), _operators.end());
 }
 
+bool	Channel::isOperator(Client *client) const
+{
+	return std::find(_operators.begin(), _operators.end(), client) != _operators.end();
+}
+
+void	Channel::addInvite(Client *client)
+{
+	if (!isInvited(client))
+		_invited.push_back(client);
+	else
+		std::cout << client->getUsername() << " is already invited to channel " << _name << std::endl;
+}
+
+bool	Channel::isInvited(Client *client) const
+{
+	return std::find(_invited.begin(), _invited.end(), client) != _invited.end();
+}
+
+void	Channel::broadcast(const std::string &msg, Client *exept)
+{
+	for (size_t i = 0; i < _members.size(); i++)
+	{
+		if (_members[i] != exept)
+			send(_members[i]->getFd(), msg.c_str(), msg.size(), 0);
+	}
+}
