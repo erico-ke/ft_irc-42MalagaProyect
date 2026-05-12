@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 12:39:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 16:54:18 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:32:33 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <string>
 # include <vector>
+# include <algorithm>
+# include <iostream>
 
 class Client;
 
