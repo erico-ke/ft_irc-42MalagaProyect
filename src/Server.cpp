@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 15:01:10 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 16:45:55 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,77 @@ void	Server::run()
 	std::cout << "Server shutting down." << std::endl;
 }
 
+void	Server::_acceptClient()
+{
+	struct sockaddr_in	clientAddr;
+	socklen_t	len = sizeof(clientAddr);
+
+	int clientFd = accept(_serverFd, (struct sockaddr*)&clientAddr, &len);
+	if (clientFd < 0)
+		return ;
+	
+	fcntl(clientFd, F_SETFL, O_NONBLOCK);
+
+	struct pollfd	pfd;
+	pfd.fd = clientFd;
+	pfd.events = POLLIN;
+	pfd.revents = 0;
+	_pollfds.push_back(pfd);
+
+	_clients[clientFd] = new Client(clientFd);
+
+	std::cout << "New client connected: fd = " << clientFd << std::endl;
+}
+
+void	Server::removeClient(int fd)
+{
+	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
+		it->second->removeMember(_clients[fd]);
+	
+	for (std::vector<struct pollfd>::iterator it = _pollfds.begin(); it != _pollfds.end(); ++it)
+	{
+		if (it->fd == fd)
+		{
+			_pollfds.erase(it);
+			break ;
+		}
+	}
+
+	close(fd);
+	delete _clients[fd];
+	_clients.erase(fd);
+
+	std::cout << "Client disconnected: fd = " << fd << std::endl;
+}
+
+void	Server::sendToClient(int fd, const std::string &msg)
+{
+	if (send(fd, msg.c_str(), msg.size(), 0) < 0)
+		removeClient(fd);
+}
+
+void	Server::_handleClient(int fd)
+{
+	char	buf[512];
+	memset(buf, 0, sizeof(buf));
+
+	int	bytes = recv(fd, buf, sizeof(buf) - 1, 0);
+
+	if (bytes <= 0)
+	{
+		removeClient(fd);
+		return ;
+	}
+
+	_clients[fd]->appendToBuffer(std::string(buf, bytes));
+
+	std::string	&buffer = _clients[fd]->getBufferRef();
+	size_t	pos;
+	while ((pos = buffer.find("\r\n")) != std::string::npos)
+	{
+		std::string	line = buffer.substr(0, pos);
+		buffer.erase(0, pos + 2);
+		if (!line.empty())
+			CommandHandler::handle(*_clients[fd], line, *this);
+	}
+}
