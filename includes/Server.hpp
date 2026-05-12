@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 14:31:50 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 16:54:08 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ public:
 		const char *what() const throw();
 	};
 
-	Server() {throw Server::invalidConstructorCall();};
+	Server() {throw Server::invalidConstructorCall();}
 	Server(int port, const std::string &password);
-	Server(const Server &other);
-	Server &operator=(const Server &other);
+	Server(const Server &other) {throw Server::invalidConstructorCall();}
+	Server &operator=(const Server &other) { throw Server::invalidConstructorCall();}
 	~Server(void);
 	
 	void	run();
