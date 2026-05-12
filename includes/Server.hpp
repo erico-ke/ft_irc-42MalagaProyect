@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/07 16:44:54 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 13:53:14 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 
 # include "./Client.hpp"
 # include "./Channel.hpp"
+# include "./CommandHandler.hpp"
 # include <vector>
 # include <map>
 # include <string>
 # include <poll.h>
 # include <stdexcept>
+# include <iostream>
+# include <cstring>
 
 /* ===== DEBUG MODE ===== */
 # ifndef DEBUG
