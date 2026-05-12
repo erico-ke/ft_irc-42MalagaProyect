@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 13:53:14 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 14:31:50 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <stdexcept>
 # include <iostream>
 # include <cstring>
+# include <unistd.h>
+# include <fcntl.h>
+# include <arpa/inet.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
 
 /* ===== DEBUG MODE ===== */
 # ifndef DEBUG
