@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:53:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/07 16:59:11 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/12 12:38:49 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,27 @@ public:
 	Client &operator=(const Client &other);
 	~Client(void);
 	
-	
+	int			getFd()			const;
+	std::string	getNickname()	const;
+	std::string	getUsername()	const;
+	std::string	getRealname()	const;
+	bool		isAuth()		const;
+	bool		passGiven()		const;
+	bool		nickGiven()		const;
+	bool		userGiven()		const;
+
+	void	setNickname(const std::string &nick);
+	void	setUsername(const std::string &user);
+	void	setRealname(const std::string &real);
+	void	setAuth(bool val);
+	void	setPassGiven(bool val);
+	void	setNickGiven(bool val);
+	void	setUserGiven(bool val);
+
+	void		appendToBuffer(const std::string &data);
+	std::string	&getBufferRef();
+
+	std::string	getPrefix()	const;
 };
 
 #endif
