@@ -46,9 +46,9 @@ private:
 	static std::vector<std::string>	splitParams(const std::string &params);
 	static std::string				getTrailing(const std::string &params);
 public:
-	CommandHandler(void);
-	CommandHandler(const CommandHandler &other);
-	CommandHandler &operator=(const CommandHandler &other);
+	CommandHandler(void) {throw invalidConstructorCall();}
+	CommandHandler(const CommandHandler &other) {(void)other; throw invalidConstructorCall();}
+	CommandHandler &operator=(const CommandHandler &other) {(void)other; throw invalidConstructorCall();}
 	~CommandHandler(void);
 	
 	static void	handle(Client &client, const std::string &line, Server &server);
