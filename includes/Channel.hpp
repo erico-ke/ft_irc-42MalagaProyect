@@ -13,6 +13,7 @@
 #ifndef CHANNEL_HPP
 # define CHANNEL_HPP
 
+# include "./CodeUtils.hpp"
 # include <string>
 # include <vector>
 # include <algorithm>
@@ -21,6 +22,7 @@
 
 class Client;
 
+/* ===== MAIN CLASS ===== */
 class Channel
 {
 private:
@@ -35,15 +37,11 @@ private:
 	int						_userLimit;
 
 public:
-	class invalidConstructorCall : public std::exception
-	{
-	public:
-		const char *what() const throw();
-	};
-	Channel(void){throw Channel::invalidConstructorCall();}
+	
+	Channel(void){throw invalidConstructorCall();}
 	Channel(const std::string &name);
-	Channel(const Channel &other) {(void)other; throw Channel::invalidConstructorCall();}
-	Channel &operator=(const Channel &other) {(void)other; throw Channel::invalidConstructorCall();}
+	Channel(const Channel &other) {(void)other; throw invalidConstructorCall();}
+	Channel &operator=(const Channel &other) {(void)other; throw invalidConstructorCall();}
 	~Channel(void);
 
 	void	addMember(Client *client);

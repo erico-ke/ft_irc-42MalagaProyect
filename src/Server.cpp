@@ -12,11 +12,6 @@
 
 #include "../includes/Server.hpp"
 
-const char	*Server::invalidConstructorCall::what() const throw()
-{
-	return ("Invalid constructor call");
-}
-
 Server::Server(int port, const std::string &password) : _port(port), _password(password), _serverFd(-1)
 {
 	_initSocket();

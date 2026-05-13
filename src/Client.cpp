@@ -11,8 +11,3 @@
 /* ************************************************************************** */
 
 #include "../includes/Client.hpp"
-
-const char	*Client::invalidConstructorCall::what() const throw()
-{
-	return ("Invalid constructor call");
-}

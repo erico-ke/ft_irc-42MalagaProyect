@@ -13,11 +13,6 @@
 #include "../includes/Channel.hpp"
 #include "../includes/Client.hpp"
 
-const char	*Channel::invalidConstructorCall::what() const throw()
-{
-	return ("Invalid constructor call");
-}
-
 Channel::Channel(const std::string &name) : _name(name), _inviteOnly(false), _topicRestricted(false), _userLimit(-1) {}
 
 Channel::~Channel() {}

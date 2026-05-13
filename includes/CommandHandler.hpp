@@ -15,6 +15,7 @@
 
 # include "Client.hpp"
 # include "Channel.hpp"
+# include "CodeUtils.hpp"
 # include <string>
 # include <vector>
 # include <iostream>
@@ -24,6 +25,7 @@
 
 class Server;
 
+/* ===== MAIN CLASS ===== */
 class CommandHandler
 {
 private:

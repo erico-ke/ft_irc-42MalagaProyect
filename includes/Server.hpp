@@ -16,6 +16,7 @@
 # include "./Client.hpp"
 # include "./Channel.hpp"
 # include "./CommandHandler.hpp"
+# include "./CodeUtils.hpp"
 # include <vector>
 # include <map>
 # include <string>
@@ -28,23 +29,6 @@
 # include <arpa/inet.h>
 # include <sys/socket.h>
 # include <netinet/in.h>
-
-/* ===== DEBUG MODE ===== */
-# ifndef DEBUG
-#  define DEBUG 0
-# endif
-
-# if DEBUG == 1
-#  define DEBUG_LOG(msg) do { std::cout << msg << std::endl; } while (0)
-# else
-#  define DEBUG_LOG(msg) do {} while (0)
-# endif
-
-/* ===== ANSI COLOR CODES ===== */
-# define RESET "\033[0m"
-# define CONSTRUCTOR_COLOR "\033[36m"
-# define DESTRUCTOR_COLOR "\033[35m"
-# define ERROR_COLOR "\033[91m"
 
 /* ===== MAIN CLASS ===== */
 class Server
@@ -61,16 +45,10 @@ private:
 	void	_acceptClient();
 	void	_handleClient(int fd);
 public:
-	class invalidConstructorCall : public std::exception
-	{
-	public:
-		const char *what() const throw();
-	};
-
-	Server() {throw Server::invalidConstructorCall();}
+	Server() {throw invalidConstructorCall();}
 	Server(int port, const std::string &password);
-	Server(const Server &other) {(void)other; throw Server::invalidConstructorCall();}
-	Server &operator=(const Server &other) {(void)other; throw Server::invalidConstructorCall();}
+	Server(const Server &other) {(void)other; throw invalidConstructorCall();}
+	Server &operator=(const Server &other) {(void)other; throw invalidConstructorCall();}
 	~Server(void);
 	
 	void	run();

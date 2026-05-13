@@ -13,24 +13,8 @@
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
 
+# include "./CodeUtils.hpp"
 # include <string>
-
-/* ===== DEBUG MODE ===== */
-# ifndef DEBUG
-#  define DEBUG 0
-# endif
-
-# if DEBUG == 1
-#  define DEBUG_LOG(msg) do { std::cout << msg << std::endl; } while (0)
-# else
-#  define DEBUG_LOG(msg) do {} while (0)
-# endif
-
-/* ===== ANSI COLOR CODES ===== */
-# define RESET "\033[0m"
-# define CONSTRUCTOR_COLOR "\033[36m"
-# define DESTRUCTOR_COLOR "\033[35m"
-# define ERROR_COLOR "\033[91m"
 
 /* ===== MAIN CLASS ===== */
 class Client
@@ -46,15 +30,10 @@ private:
 	bool		_nickGiven;
 	bool		_userGiven;
 public:
-	class invalidConstructorCall : public std::exception
-	{
-	public:
-		const char *what() const throw();
-	};
-	Client(void){ throw Client::invalidConstructorCall();}
+	Client(void){ throw invalidConstructorCall();}
 	Client(int fd);
-	Client(const Client &other) {(void)other; throw Client::invalidConstructorCall();}
-	Client &operator=(const Client &other) {(void)other; throw Client::invalidConstructorCall();}
+	Client(const Client &other) {(void)other; throw invalidConstructorCall();}
+	Client &operator=(const Client &other) {(void)other; throw invalidConstructorCall();}
 	~Client(void);
 	
 	int			getFd()			const;
