@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:46:01 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 17:18:11 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/13 15:12:04 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ private:
 
 	static std::string				toUpper(const std::string &s);
 	static std::vector<std::string>	splitParams(const std::string &params);
+	static std::string				getTrailing(const std::string &params);
 public:
 	CommandHandler(void);
 	CommandHandler(const CommandHandler &other);

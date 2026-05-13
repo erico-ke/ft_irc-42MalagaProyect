@@ -6,11 +6,11 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 16:45:55 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/13 14:30:00 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/Server.hpp"
+#include "../includes/Server.hpp"
 
 const char	*Server::invalidConstructorCall::what() const throw()
 {

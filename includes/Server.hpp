@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 16:54:08 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/13 14:28:29 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ public:
 
 	Server() {throw Server::invalidConstructorCall();}
 	Server(int port, const std::string &password);
-	Server(const Server &other) {throw Server::invalidConstructorCall();}
-	Server &operator=(const Server &other) { throw Server::invalidConstructorCall();}
+	Server(const Server &other) {(void)other; throw Server::invalidConstructorCall();}
+	Server &operator=(const Server &other) {(void)other; throw Server::invalidConstructorCall();}
 	~Server(void);
 	
 	void	run();

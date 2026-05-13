@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 12:39:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 18:30:48 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/13 14:29:46 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ public:
 	};
 	Channel(void){throw Channel::invalidConstructorCall();}
 	Channel(const std::string &name);
-	Channel(const Channel &other);
-	Channel &operator=(const Channel &other);
+	Channel(const Channel &other) {(void)other; throw Channel::invalidConstructorCall();}
+	Channel &operator=(const Channel &other) {(void)other; throw Channel::invalidConstructorCall();}
 	~Channel(void);
 
 	void	addMember(Client *client);

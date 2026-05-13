@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:53:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 16:54:11 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/13 14:29:03 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ public:
 	public:
 		const char *what() const throw();
 	};
-	Client(void){throw Client::invalidConstructorCall();}
+	Client(void){ throw Client::invalidConstructorCall();}
 	Client(int fd);
-	Client(const Client &other);
-	Client &operator=(const Client &other);
+	Client(const Client &other) {(void)other; throw Client::invalidConstructorCall();}
+	Client &operator=(const Client &other) {(void)other; throw Client::invalidConstructorCall();}
 	~Client(void);
 	
 	int			getFd()			const;
