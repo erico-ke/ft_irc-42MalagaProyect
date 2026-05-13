@@ -29,15 +29,12 @@ all:	$(NAME)
 debug:	DEBUG = 1
 debug:	re
 
-$(NAME): $(OBJS)
+$(NAME): build_objs
 	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled$(RESET)"
 
-$(OBJ_DIR)/main.o: ./main.cpp | $(OBJ_DIR)
-	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
-
-$(OBJ_DIR)/%.o: ./src/%.cpp | $(OBJ_DIR)
-	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+build_objs: $(OBJ_DIR) scripts/compile_progress.sh
+	@sh scripts/compile_progress.sh $(CXX) "$(CXXFLAGS)" "$(CPPFLAGS)" $(OBJ_DIR) $(SRC)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -52,4 +49,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY:	all debug clean fclean re
+.PHONY:	all debug clean fclean re build_objs
