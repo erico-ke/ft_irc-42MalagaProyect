@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:20:39 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/14 16:13:24 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:35:37 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,32 @@
 
 bool g_running = true;
 
+bool	portInputParser(char *arg)
+{
+	int i = 0;
+	while (arg[++i])
+	{
+		if (arg[i] < '0' || arg[i] > '9')
+			return false;
+	}
+	return true;
+}
+
+bool	parsePassword(const char *arg, std::string &out)
+{
+	out.clear();
+	for (size_t i = 0; arg[i]; ++i)
+	{
+		unsigned char c = static_cast<unsigned char>(arg[i]);
+		if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v' || c == '\f')
+			continue;
+		if (c < 33 || c > 126)
+			return false;
+		out.push_back(static_cast<char>(c));
+	}
+	return !out.empty();
+}
+
 int	main(int argc, char **argv)
 {
 	if (argc != 3)
@@ -23,8 +49,11 @@ int	main(int argc, char **argv)
 		std::cerr << ERROR_COLOR << "Error, invalid input." << RESET << " Usage: ./ircserv <port> <password>" << std::endl;
 		return 1;
 	}
-	//Agregar parseo input A.K.A revisar que sea un numero el primero 
-	//y que el segundo sea un password con sentido, caparle idioteces
+	if (portInputParser(argv[1]) == false)
+	{
+		std::cerr << ERROR_COLOR << "Error, port input must be numeric." << RESET << std::endl;
+		return 1;
+	}
 	DEBUG_LOG("Input validated");
 	int port = atoi(argv[1]);
 	if (port <= 1024 || port > 65535)
@@ -33,10 +62,10 @@ int	main(int argc, char **argv)
 		return 1;
 	}
 	DEBUG_LOG("Port " << port << " is valid");
-	std::string	password = argv[2];
-	if (password.empty())
+	std::string	password;
+	if (!parsePassword(argv[2], password))
 	{
-		std::cerr << ERROR_COLOR << "Error, empty password." << RESET << std::endl;
+		std::cerr << ERROR_COLOR << "Error, invalid password." << RESET << std::endl;
 		return 1;
 	}
 	DEBUG_LOG("Password " << password << "is valid");
