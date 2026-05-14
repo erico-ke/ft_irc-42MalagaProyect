@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/14 16:06:14 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:14:20 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 Server::Server(int port, const std::string &password) : _port(port), _password(password), _serverFd(-1)
 {
+	DEBUG_LOG("Server constructor called");
 	_initSocket();
 }
 
 Server::~Server()
 {
+	DEBUG_LOG("Server destructor called");
 	if (_serverFd >= 0)
 		close(_serverFd);
 	

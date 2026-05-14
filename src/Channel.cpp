@@ -6,16 +6,16 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:37:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 18:30:41 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:15:55 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 #include "../includes/Client.hpp"
 
-Channel::Channel(const std::string &name) : _name(name), _inviteOnly(false), _topicRestricted(false), _userLimit(-1) {}
+Channel::Channel(const std::string &name) : _name(name), _inviteOnly(false), _topicRestricted(false), _userLimit(-1) {DEBUG_LOG("Channel constructor called");}
 
-Channel::~Channel() {}
+Channel::~Channel() {DEBUG_LOG("Channel destructor called");}
 
 void	Channel::addMember(Client *client)
 {
