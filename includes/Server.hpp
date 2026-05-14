@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/13 14:28:29 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:06:14 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include <arpa/inet.h>
 # include <sys/socket.h>
 # include <netinet/in.h>
+
+extern bool g_running;
 
 /* ===== MAIN CLASS ===== */
 class Server

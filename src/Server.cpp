@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/13 14:30:00 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:06:14 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	Server::_initSocket()
 
 	std::cout << "Server initialized on port " << _port << std::endl;
 }
-
-extern bool g_running;
 
 void	Server::run()
 {

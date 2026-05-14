@@ -6,13 +6,15 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:20:39 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/12 13:45:29 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:06:14 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/Server.hpp"
 #include <iostream>
 #include <cstdlib>
+
+bool g_running = true;
 
 int	main(int argc, char **argv)
 {
