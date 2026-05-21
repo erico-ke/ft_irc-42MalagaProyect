@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:37:35 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/21 21:28:13 by fracurul         ###   ########.fr       */
+/*   Updated: 2026/05/21 21:54:17 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 // * OCF * //
 
+Client::Client(void) { throw invalidConstructorCall(); }
+
 Client::Client(int fd) : _fd(fd), _authenticated(false), _passGiven(false), _nickGiven(false), _userGiven(false)
 {
 	DEBUG_LOG("Client constructor called with fd:" << fd);
 }
 
-Client::Client(const Client &copy) { (void)copy; throw invalidConstructorCall(); }
+Client::Client(const Client &other) { (void)other; throw invalidConstructorCall(); }
 
-Client	&Client::operator=(const Client &copy) { (void)copy; throw invalidConstructorCall(); return(*this); }
+Client	&Client::operator=(const Client &other) { (void)other; throw invalidConstructorCall(); return(*this); }
 
 Client::~Client() { DEBUG_LOG("Client destructor called for fd: " << _fd); }
 
