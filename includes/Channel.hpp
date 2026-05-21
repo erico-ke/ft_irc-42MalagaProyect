@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 12:39:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/13 14:29:46 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/21 17:50:30 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ private:
 	int						_userLimit;
 
 public:
-	
+
 	Channel(void){throw invalidConstructorCall();}
 	Channel(const std::string &name);
 	Channel(const Channel &other) {(void)other; throw invalidConstructorCall();}
@@ -65,13 +65,13 @@ public:
     bool		isTopicRestricted()	const;
     int			getUserLimit()		const;
     size_t		getMemberCount()	const;
-	
+
 	void	setTopic(const std::string &topic);
 	void	setKey(const std::string &key);
-	void	setinviteOnly(bool val);
+	void	setInviteOnly(bool val);
 	void	setTopicRestricted(bool val);
 	void	setUserLimit(int limit);
-	
+
 };
 
 #endif
