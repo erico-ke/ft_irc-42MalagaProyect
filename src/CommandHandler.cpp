@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 14:07:06 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/13 15:15:19 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/25 14:30:40 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,58 @@ std::vector<std::string>	CommandHandler::splitParams(const std::string &params)
 	}
 	return result;
 }
+
+void	CommandHandler::handleJoin(Client &client, const std::string &params, Server &server)
+{
+	if (!client.isAuth()) return ;
+
+	std::vector<std::string> args = splitParams(params);
+	if (args.empty())
+	{
+		server.sendToClient(client.getFd(), ":irscerv 461 JOIN :Not enough parameters\r\n");
+		return ;
+	}
+	
+	std::string	chanName = args[0];
+	std::string	key = (args.size() > 1) ? args[1] : "";
+	
+	if (chanName[0] != '#')
+	{
+		server.sendToClient(client.getFd(), ":ircserv 403 " + chanName + " :No such channel\r\n");
+		return ;
+	}
+	
+	Channel	*chan = server.getOrCreateChannel(chanName);
+
+	if (chan->isInviteOnly() && !chan->isInvited(&client))
+	{
+		server.sendToClient(client.getFd(), ":ircserv 473 " + client.getNickname() + " " + chanName + " :Cannot join (invite only)\r\n");
+		return ;
+	}
+
+	if (!chan->getKey().empty() && chan->getKey() != key)
+	{
+		server.sendToClient(client.getFd(), ":ircserv 475 " + client.getNickname() + " " + chanName + " :Bad channel key\r\n");
+		return ;
+	}
+	
+	if (chan->getUserLimit() != -1 && (int)chan->getMemberCount() >= chan->getUserLimit())
+	{
+		server.sendToClient(client.getFd(), ":ircserv 471 " + client.getNickname() + " " + chanName + " :Channel is full\r\n");
+		return ;
+	}
+	
+	bool	firstMember = chan->isEmpty();
+	chan->addMember(&client);
+	if (firstMember)
+		chan->addOperator(&client);
+
+	std::string	joinmsg = client.getPrefix() + " JOIN " + chanName + "\r\n";
+	chan->broadcast(joinmsg);
+
+	if (chan->getTopic().empty())
+		server.sendToClient(client.getFd(), ":ircserv 331 " + client.getNickname() + " " + chanName + " :No topic is set\r\n");
+	else
+		server.sendToClient(client.getFd(), ":ircserv 332 " + client.getNickname() + " " + chanName + " :" + chan->getTopic() + "\r\n");
+}
+
