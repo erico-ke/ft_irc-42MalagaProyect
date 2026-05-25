@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 14:07:06 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/25 17:08:38 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/25 17:17:21 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,4 +168,7 @@ void	CommandHandler::handlePrivmsg(Client &client, const std::string &params, Se
 void	CommandHandler::handleKick(Client &client, const std::string &params, Server &server)
 {
 	if (!client.isAuth()) return ;
+	std::vector<std::string> args = splitParams(params);
+	std::string reason = getTrailing(params);
+	if (reason.empty()) reason = "Kicked";
 }
