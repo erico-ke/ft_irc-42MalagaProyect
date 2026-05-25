@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 14:07:06 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/25 15:13:21 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/25 16:29:32 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,4 +163,9 @@ void	CommandHandler::handlePrivmsg(Client &client, const std::string &params, Se
 		}
 		server.sendToClient(dest->getFd(), fullMsg);
 	}
+}
+
+void	CommandHandler::handleKick(Client &clien, const std::string &params, Server &server)
+{
+	
 }
