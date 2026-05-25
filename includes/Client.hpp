@@ -30,10 +30,10 @@ private:
 	bool		_nickGiven;
 	bool		_userGiven;
 public:
-	Client(void){ throw invalidConstructorCall();}
+	Client(void);
 	Client(int fd);
-	Client(const Client &other) {(void)other; throw invalidConstructorCall();}
-	Client &operator=(const Client &other) {(void)other; throw invalidConstructorCall();}
+	Client(const Client &other);
+	Client &operator=(const Client &other);
 	~Client(void);
 	
 	int			getFd()			const;

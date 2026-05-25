@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:37:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/14 16:15:55 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/21 17:50:37 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	Channel::addMember(Client *client)
 	if (!isMember(client))
 		_members.push_back(client);
 	else
-		std::cout << client->getUsername() << " is already a member of channel " << _name << std::endl; 
+		std::cout << client->getUsername() << " is already a member of channel " << _name << std::endl;
 }
 
 void	Channel::removeMember(Client *client)
@@ -78,3 +78,33 @@ void	Channel::broadcast(const std::string &msg, Client *exept)
 			send(_members[i]->getFd(), msg.c_str(), msg.size(), 0);
 	}
 }
+
+// * Getters * //
+
+std::string	Channel::getName() const { return(_name); }
+
+std::string	Channel::getTopic() const { return(_topic); }
+
+std::string	Channel::getKey() const { return(_key); }
+
+int	Channel::getUserLimit() const { return(_userLimit); }
+
+size_t	Channel::getMemberCount() const { return(_members.size()); }
+
+// * Setters * //
+
+void	Channel::setTopic(const std::string &topic) { _topic = topic; }
+
+void	Channel::setKey(const std::string &key) { _key = key; }
+
+void	Channel::setInviteOnly(bool val) { _inviteOnly = val; }
+
+void	Channel::setTopicRestricted(bool val) { _topicRestricted = val; }
+
+void	Channel::setUserLimit(int limit) { _userLimit= limit; }
+
+// * Status * //
+
+bool	Channel::isInviteOnly() const { return(_inviteOnly); }
+
+bool	Channel::isTopicRestricted() const { return(_topicRestricted); }

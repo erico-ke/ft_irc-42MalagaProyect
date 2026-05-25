@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/14 16:14:20 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/21 21:48:33 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Server::~Server()
 	DEBUG_LOG("Server destructor called");
 	if (_serverFd >= 0)
 		close(_serverFd);
-	
+
 	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
 		delete it->second;
 }
@@ -33,10 +33,10 @@ void	Server::_initSocket()
 	_serverFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (_serverFd < 0)
 		throw std::runtime_error("socket() failed");
-	
+
 	int	opt = 1;
 	setsockopt(_serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-	
+
 	fcntl(_serverFd, F_SETFL, O_NONBLOCK);
 
 	struct sockaddr_in addr;
@@ -47,7 +47,7 @@ void	Server::_initSocket()
 
 	if (bind(_serverFd, (struct sockaddr*)&addr, sizeof(addr)) < 0)
 		throw std::runtime_error("bind() failed");
-		
+
 	if (listen(_serverFd, 10) < 0)
 		throw std::runtime_error("listen() failed");
 
@@ -63,17 +63,17 @@ void	Server::_initSocket()
 void	Server::run()
 {
 	std::cout << "Server running. Waiting for connections..." << std::endl;
-	
+
 	while (g_running)
 	{
 		int ret = poll(_pollfds.data(), _pollfds.size(), -1);
-		
+
 		if (ret < 0)
 		{
 			if (!g_running) break;
 			throw std::runtime_error("poll() failed");
 		}
-		
+
 		for (size_t i = 0; i < _pollfds.size(); i++)
 		{
 			if (!(_pollfds[i].revents & POLLIN))
@@ -95,7 +95,7 @@ void	Server::_acceptClient()
 	int clientFd = accept(_serverFd, (struct sockaddr*)&clientAddr, &len);
 	if (clientFd < 0)
 		return ;
-	
+
 	fcntl(clientFd, F_SETFL, O_NONBLOCK);
 
 	struct pollfd	pfd;
@@ -113,7 +113,7 @@ void	Server::removeClient(int fd)
 {
 	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
 		it->second->removeMember(_clients[fd]);
-	
+
 	for (std::vector<struct pollfd>::iterator it = _pollfds.begin(); it != _pollfds.end(); ++it)
 	{
 		if (it->fd == fd)
@@ -161,3 +161,45 @@ void	Server::_handleClient(int fd)
 			CommandHandler::handle(*_clients[fd], line, *this);
 	}
 }
+
+// * Getters * //
+
+Client	*Server::getClientByNick(const std::string &nick)
+{
+	for (std::map<int, Client*>:: iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if (it->second->getNickname() == nick)
+			return(it->second);
+	}
+	return(NULL);
+}
+
+Channel	*Server::getChannel(const std::string &name)
+{
+	std::map<std::string, Channel*>::iterator it = _channels.find(name);
+	if (it != _channels.end())
+		return(it->second);
+	return(NULL);
+}
+
+Channel	*Server::getOrCreateChannel(const std::string &name)
+{
+	Channel	*channel = getChannel(name);
+	if (channel == NULL)
+		_channels[name] = new Channel(name);
+	return(_channels[name]);
+}
+
+bool	Server::isNickInUse(const std::string &nick) const
+{
+	for (std::map<int, Client*>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if (it->second->getNickname() == nick)
+			return(true);
+	}
+	return (false);
+}
+
+std::string	Server::getPassword() const { return(_password); }
+
+std::string	Server::getServerName() const { return("ft_irc"); }
