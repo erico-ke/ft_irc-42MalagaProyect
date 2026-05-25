@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 14:07:06 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/25 17:17:21 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/25 19:18:49 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,4 +171,36 @@ void	CommandHandler::handleKick(Client &client, const std::string &params, Serve
 	std::vector<std::string> args = splitParams(params);
 	std::string reason = getTrailing(params);
 	if (reason.empty()) reason = "Kicked";
+
+	if (args.size() < 2)
+	{
+		server.sendToClient(client.getFd(), ":ircserv 461 KICK :Not enough parameters\r\n");
+		return ;
+	}
+	
+	std::string	chanName = args[0];
+	std::string	targetNick = args[1];
+
+	Channel	*chan = server.getChannel(chanName);
+	if (!chan)
+	{
+		server.sendToClient(client.getFd(), ":ircserv 403 " + chanName + " :No such channel\r\n");
+		return ;
+	}
+	if (!chan->isOperator(&client))
+	{
+		server.sendToClient(client.getFd(),  ":ircserv 482 " + chanName + " :You're not channel operator\r\n");
+		return ;
+	}
+	
+	Client *target = server.getClientByNick(targetNick);
+	if (!target || !chan->isMember(target))
+	{
+		server.sendToClient(client.getFd(),  ":ircserv 441 " + targetNick + " " + chanName + " :They aren't on that channel\r\n");
+		return ;
+	}
+	
+	std::string	kickMsg = client.getPrefix() + " KICK " + chanName + " " + targetNick + " :" + reason + "\r\n";
+	chan->broadcast(kickMsg);
+	chan->removeMember(target);
 }
