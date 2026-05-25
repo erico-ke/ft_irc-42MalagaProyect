@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 14:07:06 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/25 16:29:32 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/25 17:08:38 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	CommandHandler::handlePrivmsg(Client &client, const std::string &params, Se
 	}
 }
 
-void	CommandHandler::handleKick(Client &clien, const std::string &params, Server &server)
+void	CommandHandler::handleKick(Client &client, const std::string &params, Server &server)
 {
-	
+	if (!client.isAuth()) return ;
 }
