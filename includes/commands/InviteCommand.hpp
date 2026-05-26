@@ -3,10 +3,10 @@
 
 # include "Command.hpp"
 
-class InviteCommand : public Command
+class	InviteCommand : public Command
 {
 public:
-	void execute(Client& client, const std::string& params, Server& server);
+	void	execute(Client& client, const std::string& params, Server& server);
 };
 
 #endif

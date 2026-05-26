@@ -17,7 +17,6 @@ class Server;
 class CommandHandler
 {
 private:
-	static void	handlePass(Client &client, const std::string &params, Server &server);
 	static void	handleNick(Client &client, const std::string &params, Server &server);
 	static void	handleUser(Client &client, const std::string &params, Server &server);
 	static void	handleTopic(Client &client, const std::string &params, Server &server);

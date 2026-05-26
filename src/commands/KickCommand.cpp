@@ -34,7 +34,7 @@ void	KickCommand::execute(Client& client, const std::string& params, Server& ser
 		return ;
 	}
 
-	Client *target = server.getClientByNick(targetNick);
+	Client	*target = server.getClientByNick(targetNick);
 	if (!target || !chan->isMember(target))
 	{
 		server.sendToClient(client.getFd(),  ":ircserv 441 " + targetNick + " " + chanName + " :They aren't on that channel\r\n");
