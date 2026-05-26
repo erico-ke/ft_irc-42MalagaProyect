@@ -34,6 +34,7 @@ OBJS			=	$(OBJ_DIR)/main.o \
 				$(OBJ_DIR)/KickCommand.o \
 				$(OBJ_DIR)/InviteCommand.o \
 				$(OBJ_DIR)/PassCommand.o \
+				$(OBJ_DIR)/NickCommand.o \
 				$(OBJ_DIR)/UserCommand.o \
 
 RM			=	rm -f
