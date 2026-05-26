@@ -6,7 +6,7 @@
 /*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:51:36 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 13:22:09 by fracurul         ###   ########.fr       */
+/*   Updated: 2026/05/26 15:16:14 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "../../includes/commands/InviteCommand.hpp"
 #include "../../includes/commands/ModeCommand.hpp"
 #include "../../includes/commands/TopicCommand.hpp"
+#include "../../includes/commands/QuitCommand.hpp"
 
 
 void::CommandHandler::handle(Client &client, const std::string &line, Server &server)
@@ -40,7 +41,7 @@ void::CommandHandler::handle(Client &client, const std::string &line, Server &se
 	if (command == "PASS") { PassCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "NICK") { NickCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "USER") { UserCommand cmd; cmd.execute(client, params, server); }
-	else if (command == "QUIT") { handleQuit(client, params, server); }
+	else if (command == "QUIT") { QuitCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "JOIN") { JoinCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "PRIVMSG") { PrivmsgCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "KICK") { KickCommand cmd; cmd.execute(client, params, server); }
@@ -89,13 +90,4 @@ void CommandHandler::_tryFinishAuth(Client &client, Server &server)
 	server.sendToClient(client.getFd(), ":ircserv 002 " + nick + " :Your host is ircserv, running version 1.0\r\n");
 	server.sendToClient(client.getFd(), ":ircserv 003 " + nick + " :This server was created today\r\n");
 	server.sendToClient(client.getFd(), ":ircserv 004 " + nick + " ircserv 1.0 o itkol\r\n");
-}
-
-// TO_DO: Implement Command classes for these handlers
-
-void CommandHandler::handleQuit(Client &client, const std::string &params, Server &server)
-{
-	(void)client;
-	(void)params;
-	(void)server;
 }
