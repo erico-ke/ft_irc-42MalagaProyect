@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandHandler.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/26 10:51:36 by erico-ke          #+#    #+#             */
+/*   Updated: 2026/05/26 10:51:37 by erico-ke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/commands/CommandHandler.hpp"
 #include "../../includes/Server.hpp"
 #include "../../includes/commands/JoinCommand.hpp"
