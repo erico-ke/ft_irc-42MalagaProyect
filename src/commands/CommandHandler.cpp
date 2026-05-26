@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:51:36 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 10:51:37 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/26 12:48:22 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include "../../includes/commands/PrivmsgCommand.hpp"
 #include "../../includes/commands/KickCommand.hpp"
 #include "../../includes/commands/InviteCommand.hpp"
+#include "../../includes/commands/ModeCommand.hpp"
+#include "../../includes/commands/TopicCommand.hpp"
+
 
 void::CommandHandler::handle(Client &client, const std::string &line, Server &server)
 {
@@ -39,8 +42,8 @@ void::CommandHandler::handle(Client &client, const std::string &line, Server &se
 	else if (command == "PRIVMSG") { PrivmsgCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "KICK") { KickCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "INVITE") { InviteCommand cmd; cmd.execute(client, params, server); }
-	else if (command == "TOPIC") { handleTopic(client, params, server); }
-	else if (command == "MODE") { handleMode(client, params, server); }
+	else if (command == "TOPIC") { TopicCommand cmd; cmd.execute(client, params, server); }
+	else if (command == "MODE") { ModeCommand cmd; cmd.execute(client, params, server); }
 	else { server.sendToClient(client.getFd(), ":server 421 " + command + " :Unknown command\r\n"); }
 }
 
