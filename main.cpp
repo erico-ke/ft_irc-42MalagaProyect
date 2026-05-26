@@ -6,15 +6,22 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:20:39 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/14 16:35:37 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/26 13:00:44 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/Server.hpp"
 #include <iostream>
 #include <cstdlib>
+#include <csignal>
 
 bool g_running = true;
+
+void	signalHandler(int sig)
+{
+	(void)sig;
+	g_running = false;
+}
 
 bool	portInputParser(char *arg)
 {
@@ -44,6 +51,10 @@ bool	parsePassword(const char *arg, std::string &out)
 
 int	main(int argc, char **argv)
 {
+	signal(SIGINT, signalHandler);
+	signal(SIGQUIT, signalHandler);
+	signal(SIGPIPE, signalHandler);
+
 	if (argc != 3)
 	{
 		std::cerr << ERROR_COLOR << "Error, invalid input." << RESET << " Usage: ./ircserv <port> <password>" << std::endl;
