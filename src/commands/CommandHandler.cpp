@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:51:36 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 12:48:22 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/26 12:52:15 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,6 @@ void CommandHandler::handleUser(Client &client, const std::string &params, Serve
 }
 
 void CommandHandler::handleQuit(Client &client, const std::string &params, Server &server)
-{
-	(void)client;
-	(void)params;
-	(void)server;
-}
-
-void CommandHandler::handleTopic(Client &client, const std::string &params, Server &server)
-{
-	(void)client;
-	(void)params;
-	(void)server;
-}
-
-void CommandHandler::handleMode(Client &client, const std::string &params, Server &server)
 {
 	(void)client;
 	(void)params;
