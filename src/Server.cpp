@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/21 21:48:33 by fracurul         ###   ########.fr       */
+/*   Updated: 2026/05/26 13:19:26 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ Server::~Server()
 
 	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
 		delete it->second;
+	
+	for (size_t i = 0; i < _clients.size(); i++)
+		delete(_clients[i]);
 }
 
 void	Server::_initSocket()
