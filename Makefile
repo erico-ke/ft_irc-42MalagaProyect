@@ -20,6 +20,7 @@ SRC			=	./main.cpp \
 				./src/commands/InviteCommand.cpp \
 				./src/commands/PassCommand.cpp \
 				./src/commands/NickCommand.cpp \
+				./src/commands/UserCommand.cpp \
 				./src/commands/TopicCommand.cpp \
 				./src/commands/ModeCommand.cpp \
 
@@ -36,9 +37,10 @@ OBJS			=	$(OBJ_DIR)/main.o \
 				$(OBJ_DIR)/InviteCommand.o \
 				$(OBJ_DIR)/PassCommand.o \
 				$(OBJ_DIR)/NickCommand.o \
+				$(OBJ_DIR)/UserCommand.o \
 				$(OBJ_DIR)/TopicCommand.o \
 				$(OBJ_DIR)/ModeCommand.o \
-				
+
 
 RM			=	rm -f
 
