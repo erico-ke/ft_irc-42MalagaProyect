@@ -12,15 +12,23 @@ YELLOW		= \033[0;33m
 SRC			=	./main.cpp \
 				./src/Channel.cpp \
 				./src/Client.cpp \
-				./src/CommandHandler.cpp \
-				./src/Server.cpp
+				./src/commands/CommandHandler.cpp \
+				./src/Server.cpp \
+				./src/commands/JoinCommand.cpp \
+				./src/commands/PrivmsgCommand.cpp \
+				./src/commands/KickCommand.cpp \
+				./src/commands/InviteCommand.cpp
 
 OBJ_DIR		=	obj
 OBJS			=	$(OBJ_DIR)/main.o \
 				$(OBJ_DIR)/Channel.o \
 				$(OBJ_DIR)/Client.o \
 				$(OBJ_DIR)/CommandHandler.o \
-				$(OBJ_DIR)/Server.o
+				$(OBJ_DIR)/Server.o \
+				$(OBJ_DIR)/JoinCommand.o \
+				$(OBJ_DIR)/PrivmsgCommand.o \
+				$(OBJ_DIR)/KickCommand.o \
+				$(OBJ_DIR)/InviteCommand.o
 
 RM			=	rm -f
 

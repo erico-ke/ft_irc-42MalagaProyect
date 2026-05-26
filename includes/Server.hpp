@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/14 16:06:14 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/26 08:14:07 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "./Client.hpp"
 # include "./Channel.hpp"
-# include "./CommandHandler.hpp"
+# include "./commands/CommandHandler.hpp"
 # include "./CodeUtils.hpp"
 # include <vector>
 # include <map>
@@ -52,7 +52,7 @@ public:
 	Server(const Server &other) {(void)other; throw invalidConstructorCall();}
 	Server &operator=(const Server &other) {(void)other; throw invalidConstructorCall();}
 	~Server(void);
-	
+
 	void	run();
 
 	void		sendToClient(int fd, const std::string &msg);
