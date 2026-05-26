@@ -23,8 +23,6 @@ private:
 	static void	handleMode(Client &client, const std::string &params, Server &server);
 	static void	handleQuit(Client &client, const std::string &params, Server &server);
 
-	static void	_tryFinishAuth(Client &client, Server &server);
-
 public:
 	CommandHandler(void) {throw invalidConstructorCall();}
 	CommandHandler(const CommandHandler &other) {(void)other; throw invalidConstructorCall();}
@@ -38,6 +36,7 @@ public:
 	static std::string				toUpper(const std::string &s);
 	static std::vector<std::string>	splitParams(const std::string &params);
 	static std::string				getTrailing(const std::string &params);
+	static void						_tryFinishAuth(Client &client, Server &server);
 };
 
 #endif
