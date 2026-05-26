@@ -63,6 +63,7 @@ public:
 	bool		isNickInUse(const std::string &nick) const;
 	std::string	getPassword() const;
 	std::string	getServerName() const;
+	std::vector<Channel*>	getChannelsForClient(Client *client) const;
 };
 
 #endif

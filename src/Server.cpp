@@ -193,6 +193,17 @@ Channel	*Server::getOrCreateChannel(const std::string &name)
 	return(_channels[name]);
 }
 
+std::vector<Channel*>	Server::getChannelsForClient(Client *client) const
+{
+	std::vector<Channel*>	channels;
+	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
+	{
+		if (it->second->isMember(client))
+			channels.push_back(it->second);
+	}
+	return (channels);
+}
+
 bool	Server::isNickInUse(const std::string &nick) const
 {
 	for (std::map<int, Client*>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
