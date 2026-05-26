@@ -23,6 +23,7 @@ SRC			=	./main.cpp \
 				./src/commands/UserCommand.cpp \
 				./src/commands/TopicCommand.cpp \
 				./src/commands/ModeCommand.cpp \
+				./src/commands/WhoCommand.cpp \
 
 
 OBJ_DIR		=	obj
@@ -40,6 +41,7 @@ OBJS			=	$(OBJ_DIR)/main.o \
 				$(OBJ_DIR)/UserCommand.o \
 				$(OBJ_DIR)/TopicCommand.o \
 				$(OBJ_DIR)/ModeCommand.o \
+				$(OBJ_DIR)/WhoCommand.o \
 
 
 RM			=	rm -f

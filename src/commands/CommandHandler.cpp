@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandHandler.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:51:36 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 13:22:09 by fracurul         ###   ########.fr       */
+/*   Updated: 2026/05/26 14:41:19 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "../../includes/commands/InviteCommand.hpp"
 #include "../../includes/commands/ModeCommand.hpp"
 #include "../../includes/commands/TopicCommand.hpp"
+#include "../../includes/commands/WhoCommand.hpp"
 
 
 void::CommandHandler::handle(Client &client, const std::string &line, Server &server)
@@ -47,6 +48,7 @@ void::CommandHandler::handle(Client &client, const std::string &line, Server &se
 	else if (command == "INVITE") { InviteCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "TOPIC") { TopicCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "MODE") { ModeCommand cmd; cmd.execute(client, params, server); }
+	else if (command == "WHO") { WhoCommand cmd; cmd.execute(client, params, server); }
 	else { server.sendToClient(client.getFd(), ":server 421 " + command + " :Unknown command\r\n"); }
 }
 
