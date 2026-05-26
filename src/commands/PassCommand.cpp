@@ -1,6 +1,6 @@
-#include "PassCommand.hpp"
-#include "Client.hpp"
-#include "Server.hpp"
+#include "../../includes/commands/PassCommand.hpp"
+#include "../../includes/Client.hpp"
+#include "../../includes/Server.hpp"
 
 void	PassCommand::execute(Client& client, const std::string& params, Server& server)
 {

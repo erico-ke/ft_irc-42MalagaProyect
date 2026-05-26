@@ -17,7 +17,10 @@ SRC			=	./main.cpp \
 				./src/commands/JoinCommand.cpp \
 				./src/commands/PrivmsgCommand.cpp \
 				./src/commands/KickCommand.cpp \
-				./src/commands/InviteCommand.cpp
+				./src/commands/InviteCommand.cpp \
+				./src/commands/PassCommand.cpp \
+				./src/commands/NickCommand.cpp \
+
 
 OBJ_DIR		=	obj
 OBJS			=	$(OBJ_DIR)/main.o \
@@ -28,7 +31,9 @@ OBJS			=	$(OBJ_DIR)/main.o \
 				$(OBJ_DIR)/JoinCommand.o \
 				$(OBJ_DIR)/PrivmsgCommand.o \
 				$(OBJ_DIR)/KickCommand.o \
-				$(OBJ_DIR)/InviteCommand.o
+				$(OBJ_DIR)/InviteCommand.o \
+				$(OBJ_DIR)/PassCommand.o \
+				$(OBJ_DIR)/NickCommand.o \
 
 RM			=	rm -f
 
