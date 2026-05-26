@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandHandler.hpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/26 10:51:46 by erico-ke          #+#    #+#             */
+/*   Updated: 2026/05/26 11:34:18 by erico-ke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef COMMANDHANDLER_HPP
 # define COMMANDHANDLER_HPP
 
@@ -19,8 +31,6 @@ class CommandHandler
 private:
 	static void	handleNick(Client &client, const std::string &params, Server &server);
 	static void	handleUser(Client &client, const std::string &params, Server &server);
-	static void	handleTopic(Client &client, const std::string &params, Server &server);
-	static void	handleMode(Client &client, const std::string &params, Server &server);
 	static void	handleQuit(Client &client, const std::string &params, Server &server);
 
 public:
