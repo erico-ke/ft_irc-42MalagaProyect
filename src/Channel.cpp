@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:37:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/21 17:50:37 by fracurul         ###   ########.fr       */
+/*   Updated: 2026/05/26 15:24:24 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ std::string	Channel::getKey() const { return(_key); }
 int	Channel::getUserLimit() const { return(_userLimit); }
 
 size_t	Channel::getMemberCount() const { return(_members.size()); }
+
+const std::vector<Client*> &Channel::getMembers() const { return _members; }
 
 // * Setters * //
 
