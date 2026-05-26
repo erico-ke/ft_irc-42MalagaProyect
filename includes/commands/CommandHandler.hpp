@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:51:46 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 11:05:55 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/26 11:34:18 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ private:
 	static void	handlePass(Client &client, const std::string &params, Server &server);
 	static void	handleNick(Client &client, const std::string &params, Server &server);
 	static void	handleUser(Client &client, const std::string &params, Server &server);
-	static void	handleMode(Client &client, const std::string &params, Server &server);
 	static void	handleQuit(Client &client, const std::string &params, Server &server);
 
 	static void	_tryFinishAuth(Client &client, Server &server);
