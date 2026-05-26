@@ -1,9 +1,9 @@
-#ifndef INVITECOMMAND_HPP
-# define INVITECOMMAND_HPP
+#ifndef PASSCOMMAND_HPP
+# define PASSCOMMAND_HPP
 
 # include "Command.hpp"
 
-class	InviteCommand : public Command
+class	PassCommand : public Command
 {
 public:
 	void	execute(Client& client, const std::string& params, Server& server);

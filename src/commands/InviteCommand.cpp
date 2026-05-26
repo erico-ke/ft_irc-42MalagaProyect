@@ -37,7 +37,7 @@ void	InviteCommand::execute(Client& client, const std::string& params, Server& s
 		return ;
 	}
 
-	Client* target = server.getClientByNick(targetNick);
+	Client*	target = server.getClientByNick(targetNick);
 	if (!target)
 	{
 		server.sendToClient(client.getFd(), ":ircserv 401 " + targetNick + " :No such nick\r\n");

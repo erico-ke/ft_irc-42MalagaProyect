@@ -1,5 +1,6 @@
 #include "../../includes/commands/CommandHandler.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/commands/PassCommand.hpp"
 #include "../../includes/commands/JoinCommand.hpp"
 #include "../../includes/commands/PrivmsgCommand.hpp"
 #include "../../includes/commands/KickCommand.hpp"
@@ -19,7 +20,7 @@ void::CommandHandler::handle(Client &client, const std::string &line, Server &se
 	if (!params.empty() && params[0] == ' ')
 		params = params.substr(1);
 
-	if (command == "PASS") { handlePass(client, params, server); }
+	if (command == "PASS") { PassCommand cmd; cmd.execute(client, params, server); }
 	else if (command == "NICK") { handleNick(client, params, server); }
 	else if (command == "USER") { handleUser(client, params, server); }
 	else if (command == "QUIT") { handleQuit(client, params, server); }
@@ -61,12 +62,6 @@ std::vector<std::string>	CommandHandler::splitParams(const std::string &params)
 }
 
 // TO_DO: Implement Command classes for these handlers
-void CommandHandler::handlePass(Client &client, const std::string &params, Server &server)
-{
-	(void)client;
-	(void)params;
-	(void)server;
-}
 
 void CommandHandler::handleNick(Client &client, const std::string &params, Server &server)
 {
