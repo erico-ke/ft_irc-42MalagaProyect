@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:34:01 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 12:47:02 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 15:01:16 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,11 @@ void	ModeCommand::execute(Client &client, const std::string &params, Server &ser
 			break ;
 		case 'o':
 			Client	*targetClient = server.getClientByNick(arg);
+			if (targetClient->getNickname() == client.getNickname())
+			{
+				server.sendToClient(client.getFd(), ":ircserv 696 " + client.getNickname() + chan->getName() + " :You cannot target yourself with /mode -o\r\n");
+				break ;
+			}
 			if (targetClient && chan->isMember(targetClient))
 			{
 				if (adding) chan->addOperator(targetClient);

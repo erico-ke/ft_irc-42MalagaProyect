@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 13:19:26 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 16:49:31 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ Server::~Server()
 	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
 		delete it->second;
 	
-	for (size_t i = 0; i < _clients.size(); i++)
+	for (size_t i = 3; i < _clients.size() + 3; i++)
+	{
+		close(i);
 		delete(_clients[i]);
+	}
 }
 
 void	Server::_initSocket()
@@ -125,11 +128,7 @@ void	Server::removeClient(int fd)
 			break ;
 		}
 	}
-
-	close(fd);
-	delete _clients[fd];
-	_clients.erase(fd);
-
+	
 	std::cout << "Client disconnected: fd = " << fd << std::endl;
 }
 
@@ -156,13 +155,16 @@ void	Server::_handleClient(int fd)
 
 	std::string	&buffer = _clients[fd]->getBufferRef();
 	size_t	pos;
-	while ((pos = buffer.find("\r\n")) != std::string::npos)
+	while ((pos = buffer.find("\n")) != std::string::npos)
 	{
+		if (buffer.find("\r") != std::string::npos)
+			pos = buffer.find("\r");
 		std::string	line = buffer.substr(0, pos);
 		buffer.erase(0, pos + 2);
 		if (!line.empty())
 			CommandHandler::handle(*_clients[fd], line, *this);
 	}
+	
 }
 
 // * Getters * //
