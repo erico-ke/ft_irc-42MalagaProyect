@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 12:39:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 15:24:24 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/socket.h>
 
 class Client;
+class Server;
 
 /* ===== MAIN CLASS ===== */
 class Channel
@@ -56,7 +57,7 @@ public:
 	void	addInvite(Client *client);
 	bool	isInvited(Client *client) const;
 
-	void	broadcast(const std::string &msg, Client *exept = NULL);
+	void	broadcast(const std::string &msg, Server &server, Client *exept = NULL);
 
 	std::string	getName()			const;
     std::string	getTopic()			const;

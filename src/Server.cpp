@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/27 18:09:53 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,20 @@ void	Server::run()
 
 		for (size_t i = 0; i < _pollfds.size(); i++)
 		{
-			if (!(_pollfds[i].revents & POLLIN))
+			int fd = _pollfds[i].fd;
+			short revents = _pollfds[i].revents;
+			if (fd == _serverFd)
+			{
+				if (revents & POLLIN)
+					_acceptClient();
 				continue ;
-			if (_pollfds[i].fd == _serverFd)
-				_acceptClient();
-			else
-				_handleClient(_pollfds[i].fd);
+			}
+			if (revents & POLLIN)
+				_handleClient(fd);
+			if (_clients.find(fd) == _clients.end())
+				continue ;
+			if (revents & POLLOUT)
+				_flushClientOutput(fd);
 		}
 	}
 	std::cout << "Server shutting down." << std::endl;
@@ -144,8 +152,11 @@ void	Server::removeClient(int fd)
 
 void	Server::sendToClient(int fd, const std::string &msg)
 {
-	if (send(fd, msg.c_str(), msg.size(), 0) < 0)
-		removeClient(fd);
+	std::map<int, Client*>::iterator clientIt = _clients.find(fd);
+	if (clientIt == _clients.end())
+		return ;
+	clientIt->second->appendToOutBuffer(msg);
+	_setPollEvents(fd, POLLIN | POLLOUT);
 }
 
 void	Server::_handleClient(int fd)
@@ -182,6 +193,41 @@ void	Server::_handleClient(int fd)
 			return ;
 	}
 	
+}
+
+void	Server::_flushClientOutput(int fd)
+{
+	std::map<int, Client*>::iterator clientIt = _clients.find(fd);
+	if (clientIt == _clients.end())
+		return ;
+	Client *client = clientIt->second;
+	std::string &outBuffer = client->getOutBufferRef();
+	if (outBuffer.empty())
+	{
+		_setPollEvents(fd, POLLIN);
+		return ;
+	}
+	ssize_t sent = send(fd, outBuffer.c_str(), outBuffer.size(), 0);
+	if (sent <= 0)
+	{
+		removeClient(fd);
+		return ;
+	}
+	outBuffer.erase(0, sent);
+	if (outBuffer.empty())
+		_setPollEvents(fd, POLLIN);
+}
+
+void	Server::_setPollEvents(int fd, short events)
+{
+	for (size_t i = 0; i < _pollfds.size(); i++)
+	{
+		if (_pollfds[i].fd == fd)
+		{
+			_pollfds[i].events = events;
+			break ;
+		}
+	}
 }
 
 // * Getters * //

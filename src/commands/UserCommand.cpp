@@ -16,6 +16,11 @@ void	UserCommand::execute(Client& client, const std::string& params, Server& ser
 		server.sendToClient(client.getFd(), ":ircserv 461 USER :Not enough parameters\r\n");
 		return;
 	}
+	if (!client.nickGiven())
+	{
+		server.sendToClient(client.getFd(), ":ircserv 431 :Expected NICK\r\n");
+		return ;
+	}
 	client.setUsername(args[0]);
 	client.setRealname(CommandHandler::getTrailing(params));
 	client.setUserGiven(true);

@@ -32,13 +32,20 @@ void	QuitCommand::execute(Client &client, const std::string &params, Server &ser
 			}
 			if (count == 0)
 			{
-				if (members[0]->getFd() != client.getFd())
-					channels[i]->addOperator(members[0]);
-				else if (members[1])
-					channels[i]->addOperator(members[1]);
+				Client *candidate = NULL;
+				for (size_t j = 0; j < members.size(); j++)
+				{
+					if (members[j]->getFd() != client.getFd())
+					{
+						candidate = members[j];
+						break ;
+					}
+				}
+				if (candidate)
+					channels[i]->addOperator(candidate);
 			}
 		}
-		channels[i]->broadcast(quitMsg, &client);
+		channels[i]->broadcast(quitMsg, server, &client);
 	}
 
 	server.removeClient(client.getFd());

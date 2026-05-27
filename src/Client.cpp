@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:37:35 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/27 16:30:55 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	Client::setNickGiven(bool val) { _nickGiven = val; }
 void	Client::setUserGiven(bool val) { _userGiven = val; }
 
 void	Client::appendToBuffer(const std::string &data) { _buffer += data; }
+void	Client::appendToOutBuffer(const std::string &data) { _outBuffer += data; }
 
 // * Getters * //
 
@@ -58,6 +59,7 @@ std::string	Client::getRealname() const { return(_realname); }
 std::string	Client::getPrefix() const { return(std::string(":") + _nickname + "!" + _username + "@localhost"); }
 
 std::string	&Client::getBufferRef() { return(_buffer); }
+std::string	&Client::getOutBufferRef() { return(_outBuffer); }
 
 bool	Client::isAuth() const { return(_authenticated); }
 bool	Client::passGiven() const { return(_passGiven); }

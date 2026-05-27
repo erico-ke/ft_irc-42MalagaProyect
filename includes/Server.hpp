@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 08:14:07 by fracurul         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ private:
 	void	_initSocket();
 	void	_acceptClient();
 	void	_handleClient(int fd);
+	void	_flushClientOutput(int fd);
+	void	_setPollEvents(int fd, short events);
 public:
 	Server() {throw invalidConstructorCall();}
 	Server(int port, const std::string &password);

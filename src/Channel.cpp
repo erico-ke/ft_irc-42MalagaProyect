@@ -6,12 +6,13 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:37:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 15:24:24 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Channel.hpp"
 #include "../includes/Client.hpp"
+#include "../includes/Server.hpp"
 
 Channel::Channel(const std::string &name) : _name(name), _inviteOnly(false), _topicRestricted(false), _userLimit(-1) {DEBUG_LOG("Channel constructor called");}
 
@@ -70,12 +71,12 @@ bool	Channel::isInvited(Client *client) const
 	return std::find(_invited.begin(), _invited.end(), client) != _invited.end();
 }
 
-void	Channel::broadcast(const std::string &msg, Client *exept)
+void	Channel::broadcast(const std::string &msg, Server &server, Client *exept)
 {
 	for (size_t i = 0; i < _members.size(); i++)
 	{
 		if (_members[i] != exept)
-			send(_members[i]->getFd(), msg.c_str(), msg.size(), 0);
+			server.sendToClient(_members[i]->getFd(), msg);
 	}
 }
 

@@ -21,6 +21,13 @@ void	NickCommand::execute(Client& client, const std::string& params, Server& ser
 		return ;
 	}
 
+	
+	if (!client.passGiven())
+	{
+		server.sendToClient(client.getFd(), ":ircserv 464 :Expected PASS\r\n");
+		return ;
+	}
+
 	std::string	oldNick = client.getNickname();
 	client.setNickname(params);
 	client.setNickGiven(true);
@@ -29,5 +36,4 @@ void	NickCommand::execute(Client& client, const std::string& params, Server& ser
 		server.sendToClient(client.getFd(), ":" + oldNick + "!user@localhost NICK :" + params + "\r\n");
 		return ;
 	}
-	CommandHandler::_tryFinishAuth(client, server);
 }

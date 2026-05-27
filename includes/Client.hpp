@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:53:41 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/13 14:29:03 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ private:
 	std::string	_username;
 	std::string	_realname;
 	std::string	_buffer;
+	std::string	_outBuffer;
 	bool		_authenticated;
 	bool		_passGiven;
 	bool		_nickGiven;
@@ -55,6 +56,8 @@ public:
 
 	void		appendToBuffer(const std::string &data);
 	std::string	&getBufferRef();
+	void		appendToOutBuffer(const std::string &data);
+	std::string	&getOutBufferRef();
 
 	std::string	getPrefix()	const;
 };

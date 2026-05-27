@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:34:01 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/27 15:01:16 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ void	ModeCommand::execute(Client &client, const std::string &params, Server &ser
 	if (!appliedModes.empty())
 	{
 		std::string	modeChange = client.getPrefix() + " MODE " + target + " " + (adding ? "+" : "-") + appliedModes + appliedArgs + "\r\n";
-		chan->broadcast(modeChange);
+		chan->broadcast(modeChange, server);
 	}
 }

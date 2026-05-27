@@ -57,7 +57,7 @@ void	JoinCommand::execute(Client& client, const std::string& params, Server& ser
 		chan->addOperator(&client);
 
 	std::string	joinmsg = client.getPrefix() + " JOIN " + chanName + "\r\n";
-	chan->broadcast(joinmsg);
+	chan->broadcast(joinmsg, server);
 
 	if (chan->getTopic().empty())
 		server.sendToClient(client.getFd(), ":ircserv 331 " + client.getNickname() + " " + chanName + " :No topic is set\r\n");

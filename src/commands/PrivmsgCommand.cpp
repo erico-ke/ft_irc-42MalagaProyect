@@ -35,7 +35,7 @@ void	PrivmsgCommand::execute(Client& client, const std::string& params, Server& 
 			server.sendToClient(client.getFd(), ":ircserv 404 " + target + " :Cannot send to channel (not a member)\r\n");
 			return ;
 		}
-		chan->broadcast(fullMsg, &client);
+		chan->broadcast(fullMsg, server, &client);
 	}
 	else
 	{

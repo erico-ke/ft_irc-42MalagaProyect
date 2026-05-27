@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:03:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 11:26:12 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ void	TopicCommand::execute(Client &client, const std::string &params, Server &se
 	std::string newTopic = CommandHandler::getTrailing(params);
 	chan->setTopic(newTopic);
 	
-	chan->broadcast(client.getPrefix() + " TOPIC " + chanName + " :" + newTopic + "\r\n");
+	chan->broadcast(client.getPrefix() + " TOPIC " + chanName + " :" + newTopic + "\r\n", server);
 }
