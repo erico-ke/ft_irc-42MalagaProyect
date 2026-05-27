@@ -43,6 +43,11 @@ void	InviteCommand::execute(Client& client, const std::string& params, Server& s
 		server.sendToClient(client.getFd(), ":ircserv 401 " + targetNick + " :No such nick\r\n");
 		return ;
 	}
+	if (chan->isMember(target))
+	{
+		server.sendToClient(client.getFd(), ":ircserv 443 " + client.getNickname()+ " :" + targetNick + " is already on channel " + chanName + "\r\n");
+		return ;
+	}
 
 	chan->addInvite(target);
 
