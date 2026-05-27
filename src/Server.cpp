@@ -6,7 +6,7 @@
 /*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 16:25:10 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/27 16:49:31 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/27 18:09:53 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ Server::~Server()
 
 	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
 		delete it->second;
-	
-	for (size_t i = 3; i < _clients.size() + 3; i++)
+
+	for (std::map<int, Client*>::iterator it = _clients.begin(); it != _clients.end(); ++it)
 	{
-		close(i);
-		delete(_clients[i]);
+		if (it->first >= 0)
+			close(it->first);
+		delete it->second;
 	}
+	_clients.clear();
 }
 
 void	Server::_initSocket()
@@ -117,8 +119,12 @@ void	Server::_acceptClient()
 
 void	Server::removeClient(int fd)
 {
+	std::map<int, Client*>::iterator clientIt = _clients.find(fd);
+	if (clientIt == _clients.end())
+		return ;
+
 	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
-		it->second->removeMember(_clients[fd]);
+		it->second->removeMember(clientIt->second);
 
 	for (std::vector<struct pollfd>::iterator it = _pollfds.begin(); it != _pollfds.end(); ++it)
 	{
@@ -128,6 +134,10 @@ void	Server::removeClient(int fd)
 			break ;
 		}
 	}
+
+	close(fd);
+	delete clientIt->second;
+	_clients.erase(clientIt);
 	
 	std::cout << "Client disconnected: fd = " << fd << std::endl;
 }
@@ -140,6 +150,11 @@ void	Server::sendToClient(int fd, const std::string &msg)
 
 void	Server::_handleClient(int fd)
 {
+	std::map<int, Client*>::iterator clientIt = _clients.find(fd);
+	if (clientIt == _clients.end())
+		return ;
+	Client *client = clientIt->second;
+
 	char	buf[512];
 	memset(buf, 0, sizeof(buf));
 
@@ -151,9 +166,9 @@ void	Server::_handleClient(int fd)
 		return ;
 	}
 
-	_clients[fd]->appendToBuffer(std::string(buf, bytes));
+	client->appendToBuffer(std::string(buf, bytes));
 
-	std::string	&buffer = _clients[fd]->getBufferRef();
+	std::string	&buffer = client->getBufferRef();
 	size_t	pos;
 	while ((pos = buffer.find("\n")) != std::string::npos)
 	{
@@ -162,7 +177,9 @@ void	Server::_handleClient(int fd)
 		std::string	line = buffer.substr(0, pos);
 		buffer.erase(0, pos + 2);
 		if (!line.empty())
-			CommandHandler::handle(*_clients[fd], line, *this);
+			CommandHandler::handle(*client, line, *this);
+		if (_clients.find(fd) == _clients.end())
+			return ;
 	}
 	
 }
