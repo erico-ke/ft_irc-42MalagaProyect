@@ -9,7 +9,7 @@ RED			= \033[0;31m
 GREEN		= \033[0;32m
 YELLOW		= \033[0;33m
 
-SRC			=	./main.cpp \
+SRC			= 	./main.cpp \
 				./src/Channel.cpp \
 				./src/Client.cpp \
 				./src/commands/CommandHandler.cpp \
@@ -27,23 +27,10 @@ SRC			=	./main.cpp \
 				./src/commands/QuitCommand.cpp \
 
 
-OBJ_DIR		=	obj
-OBJS			=	$(OBJ_DIR)/main.o \
-				$(OBJ_DIR)/Channel.o \
-				$(OBJ_DIR)/Client.o \
-				$(OBJ_DIR)/CommandHandler.o \
-				$(OBJ_DIR)/Server.o \
-				$(OBJ_DIR)/JoinCommand.o \
-				$(OBJ_DIR)/PrivmsgCommand.o \
-				$(OBJ_DIR)/KickCommand.o \
-				$(OBJ_DIR)/InviteCommand.o \
-				$(OBJ_DIR)/PassCommand.o \
-				$(OBJ_DIR)/NickCommand.o \
-				$(OBJ_DIR)/UserCommand.o \
-				$(OBJ_DIR)/TopicCommand.o \
-				$(OBJ_DIR)/ModeCommand.o \
-				$(OBJ_DIR)/WhoCommand.o \
-				$(OBJ_DIR)/QuitCommand.o \
+OBJ_DIR		= 	obj
+OBJS			= 	$(SRC:./%.cpp=$(OBJ_DIR)/%.o)
+
+TOTAL_SRCS	= 	$(words $(SRC))
 
 
 RM			=	rm -f
@@ -53,12 +40,18 @@ all:	$(NAME)
 debug:	DEBUG = 1
 debug:	re
 
-$(NAME): build_objs
+
+$(NAME): $(OBJS)
 	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled$(RESET)"
 
-build_objs: $(OBJ_DIR) scripts/compile_progress.sh
-	@sh scripts/compile_progress.sh $(CXX) "$(CXXFLAGS)" "$(CPPFLAGS)" $(OBJ_DIR) $(SRC)
+$(OBJ_DIR)/%.o: ./%.cpp | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
+	@idx=$$(i=0; for s in $(SRC); do i=$$((i+1)); if [ "$$s" = "$<" ]; then echo $$i; break; fi; done); \
+	if [ -z "$$idx" ]; then \
+		idx=$$(i=0; for s in $(SRC); do i=$$((i+1)); if [ "$$s" = "./$<" ]; then echo $$i; break; fi; done); \
+	fi; \
+	sh scripts/compile_progress.sh "$(CXX)" "$(CXXFLAGS)" "$(CPPFLAGS)" "$<" "$@" "$$idx" "$(TOTAL_SRCS)"
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -73,4 +66,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY:	all debug clean fclean re build_objs
+.PHONY:	all debug clean fclean re

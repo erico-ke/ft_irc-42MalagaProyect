@@ -1,31 +1,40 @@
 #!/bin/sh
 set -e
-if [ "$#" -lt 5 ]; then
-  echo "Usage: $0 CXX CXXFLAGS CPPFLAGS OBJ_DIR SRC..."
+
+if [ "$#" -lt 7 ]; then
+  echo "Usage: $0 CXX CXXFLAGS CPPFLAGS SRC OBJ INDEX TOTAL"
   exit 1
 fi
+
 CXX=$1
 CXXFLAGS=$2
 CPPFLAGS=$3
-OBJ_DIR=$4
-shift 4
-TOTAL=$#
-if [ "$TOTAL" -eq 0 ]; then
-  echo "No sources provided"
-  exit 0
-fi
+SRC=$4
+OBJ=$5
+INDEX=$6
+TOTAL=$7
+
+RESET='\033[0m'
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+
 WIDTH=40
-i=0
-for src in "$@"; do
-  i=$((i+1))
-  base=$(basename "$src")
-  name=${base%%.*}
-  obj="$OBJ_DIR/${name}.o"
-  # compile
-  $CXX $CXXFLAGS $CPPFLAGS -c "$src" -o "$obj"
-  # progress
-  percent=$((i*100/TOTAL))
-  filled=$((i*WIDTH/TOTAL))
+
+case "$INDEX" in
+  ''|*[!0-9]*) INDEX=0 ;;
+esac
+case "$TOTAL" in
+  ''|*[!0-9]*) TOTAL=0 ;;
+esac
+
+base=$(basename "$SRC")
+
+$CXX $CXXFLAGS $CPPFLAGS -c "$SRC" -o "$OBJ"
+
+if [ "$TOTAL" -gt 0 ]; then
+  percent=$((INDEX*100/TOTAL))
+  filled=$((INDEX*WIDTH/TOTAL))
   empty=$((WIDTH-filled))
   bar=""
   n=0
@@ -38,6 +47,13 @@ for src in "$@"; do
     bar="${bar}-"
     n=$((n+1))
   done
-  printf "\rCompiling: [%s] %d%% (%d/%d)" "$bar" "$percent" "$i" "$TOTAL"
-done
-printf "\n"
+  printf "\r%b[%d/%d]%b %b%-28s%b %b[%s]%b %3d%%" \
+    "$YELLOW" "$INDEX" "$TOTAL" "$RESET" \
+    "$CYAN" "$base" "$RESET" \
+    "$GREEN" "$bar" "$RESET" "$percent"
+  if [ "$INDEX" -eq "$TOTAL" ] 2>/dev/null; then
+    printf "\n"
+  fi
+else
+  printf "\r%bCompiling%b %b%-28s%b" "$YELLOW" "$RESET" "$CYAN" "$base" "$RESET"
+fi
