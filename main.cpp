@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:20:39 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/28 11:17:53 by fracurul         ###   ########.fr       */
+/*   Updated: 2026/05/28 15:29:03 by erico-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	signalHandler(int sig)
 
 bool	portInputParser(char *arg)
 {
-	int	i = 0;
+	int	i = -1;
 	while (arg[++i])
 	{
 		if (arg[i] < '0' || arg[i] > '9') { return (false); }

@@ -31,7 +31,7 @@ void	JoinCommand::execute(Client& client, const std::string& params, Server& ser
 
 	std::string	chanName = args[0];
 	std::string	key = (args.size() > 1) ? args[1] : "";
-	if (!chanName[1])
+	if (chanName.size() < 2)
 	{
 		server.sendToClient(client.getFd(), ":ircserv 461 JOIN :Not enough parameters (# has to be followed by something(not a space))\r\n");
 		return ;

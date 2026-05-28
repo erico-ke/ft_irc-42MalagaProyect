@@ -96,12 +96,17 @@ void	ModeCommand::execute(Client &client, const std::string &params, Server &ser
 				break ;
 			case 'o':
 				Client	*targetClient = server.getClientByNick(arg);
-				if (targetClient->getNickname() == client.getNickname())
+				if (!targetClient)
 				{
-					server.sendToClient(client.getFd(), ":ircserv 696 " + client.getNickname() + chan->getName() + " :You cannot target yourself with /mode -o\r\n");
+					server.sendToClient(client.getFd(), ":ircserv 401 " + arg + " :No such nick\r\n");
 					break ;
 				}
-				if (targetClient && chan->isMember(targetClient))
+				if (targetClient->getNickname() == client.getNickname())
+				{
+					server.sendToClient(client.getFd(), ":ircserv 696 " + client.getNickname() + " " + chan->getName() + " :You cannot target yourself with /mode -o\r\n");
+					break ;
+				}
+				if (chan->isMember(targetClient))
 				{
 					if (adding) chan->addOperator(targetClient);
 					else chan->removeOperator(targetClient);

@@ -18,11 +18,6 @@
 void	QuitCommand::execute(Client &client, const std::string &params, Server &server)
 {
 	if (!client.isAuth()) { return ; }
-	if (params.empty())
-	{
-		server.sendToClient(client.getFd(), ":ircserv 461 QUIT :Not enough parameters\r\n");
-		return ;
-	}
 	std::string	reason = CommandHandler::getTrailing(params);
 	if (reason.empty()) reason = "Client quit";
 
