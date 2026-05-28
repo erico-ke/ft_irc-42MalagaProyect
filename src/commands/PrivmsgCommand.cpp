@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PrivmsgCommand.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/28 10:01:32 by fracurul          #+#    #+#             */
+/*   Updated: 2026/05/28 10:14:14 by fracurul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/commands/PrivmsgCommand.hpp"
 #include "../../includes/Client.hpp"
 #include "../../includes/Server.hpp"
@@ -8,11 +20,10 @@
 
 void	PrivmsgCommand::execute(Client& client, const std::string& params, Server& server)
 {
-	if (!client.isAuth()) return ;
+	if (!client.isAuth()) { return ; }
 
-	std::vector<std::string> args = CommandHandler::splitParams(params);
-	std::string	message = CommandHandler::getTrailing(params);
-
+	std::vector<std::string>	args = CommandHandler::splitParams(params);
+	std::string					message = CommandHandler::getTrailing(params);
 	if (args.empty() || message.empty())
 	{
 		server.sendToClient(client.getFd(), ":ircserv 461 PRIVMSG :Not enough parameters\r\n");
@@ -21,7 +32,6 @@ void	PrivmsgCommand::execute(Client& client, const std::string& params, Server& 
 
 	std::string	target = args[0];
 	std::string	fullMsg = client.getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n";
-
 	if (target[0] == '#')
 	{
 		Channel	*chan = server.getChannel(target);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 12:22:34 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/28 12:19:58 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,42 +30,43 @@
 # include <sys/socket.h>
 # include <netinet/in.h>
 
-extern bool g_running;
+extern bool	g_running;
 
-/* ===== MAIN CLASS ===== */
-class Server
+class	Server
 {
-private:
-	int								_port;
-	std::string						_password;
-	int								_serverFd;
-	std::vector<struct pollfd>		_pollfds;
-	std::map<int, Client*>			_clients;
-	std::map<std::string, Channel*>	_channels;
+	private:
+		int								_port;
+		std::string						_password;
+		int								_serverFd;
+		std::vector<struct pollfd>		_pollfds;
+		std::map<int, Client*>			_clients;
+		std::map<std::string, Channel*>	_channels;
 
-	void	_initSocket();
-	void	_acceptClient();
-	void	_handleClient(int fd);
-	void	_flushClientOutput(int fd);
-	void	_setPollEvents(int fd, short events);
-public:
-	Server() {throw invalidConstructorCall();}
-	Server(int port, const std::string &password);
-	Server(const Server &other) {(void)other; throw invalidConstructorCall();}
-	Server &operator=(const Server &other) {(void)other; throw invalidConstructorCall();}
-	~Server(void);
+		void	_initSocket();
+		void	_acceptClient();
+		void	_handleClient(int fd);
+		void	_flushClientOutput(int fd);
+		void	_setPollEvents(int fd, short events);
+	public:
+		Server() { throw invalidConstructorCall(); }
+		Server(int port, const std::string &password);
+		Server(const Server &other) { (void)other; throw invalidConstructorCall(); }
+		Server &operator=(const Server &other) { (void)other; throw invalidConstructorCall(); }
+		~Server(void);
 
-	void	run();
+		void	run();
 
-	void		sendToClient(int fd, const std::string &msg);
-	void		removeClient(int fd);
-	Client		*getClientByNick(const std::string &nick);
-	Channel		*getChannel(const std::string &name);
-	Channel		*getOrCreateChannel(const std::string &name);
-	bool		isNickInUse(const std::string &nick) const;
-	std::string	getPassword() const;
-	std::string	getServerName() const;
-	std::vector<Channel*>	getChannelsForClient(Client *client) const;
+		void		sendToClient(int fd, const std::string &msg);
+		void		removeClient(int fd);
+
+		// * Getters * //
+		Client					*getClientByNick(const std::string &nick);
+		Channel					*getChannel(const std::string &name);
+		Channel					*getOrCreateChannel(const std::string &name);
+		bool					isNickInUse(const std::string &nick) const;
+		std::string				getPassword() const;
+		std::string				getServerName() const;
+		std::vector<Channel*>	getChannelsForClient(Client *client) const;
 };
 
 #endif

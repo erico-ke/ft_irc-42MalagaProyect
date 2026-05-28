@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CodeUtils.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:51:18 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 10:51:19 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/28 12:21:23 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <exception>
 
-/* ===== DEBUG MODE ===== */
+// * DEBUG MODE * //
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -27,19 +27,17 @@
 #  define DEBUG_LOG(msg) do {} while (0)
 # endif
 
-/* ===== ANSI COLOR CODES ===== */
-
+// * ANSI COLOR CODES * //
 # define RESET "\033[0m"
 # define CONSTRUCTOR_COLOR "\033[36m"
 # define DESTRUCTOR_COLOR "\033[35m"
 # define ERROR_COLOR "\033[91m"
 
-/* ===== GENERIC EXCEPTIONS ===== */
-
-class invalidConstructorCall : public std::exception
+// * GENERIC EXCEPTIONS * //
+class	invalidConstructorCall : public std::exception
 {
-public:
-	const char *what() const throw() {return "Invalid constructor call";}
+	public:
+		const char *what() const throw() { return "Invalid constructor call"; }
 };
 
 #endif

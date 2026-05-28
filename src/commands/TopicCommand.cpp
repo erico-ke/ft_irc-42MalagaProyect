@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TopicCommand.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:03:24 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/27 19:13:34 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/28 10:16:44 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 
 void	TopicCommand::execute(Client &client, const std::string &params, Server &server)
 {
-	if (!client.isAuth()) return ;
+	if (!client.isAuth()) { return ; }
 
-	std::vector<std::string> args = CommandHandler::splitParams(params);
+	std::vector<std::string>	args = CommandHandler::splitParams(params);
 	if (args.empty())
 	{
 		server.sendToClient(client.getFd(), ":ircserv 461 TOPIC :Not enough parameters\r\n");
 		return ;
 	}
-	
+
 	std::string	chanName = args[0];
-	Channel	*chan = server.getChannel(chanName);
+	Channel		*chan = server.getChannel(chanName);
 	if (!chan)
 	{
 		server.sendToClient(client.getFd(), ":ircserv 403 " + chanName + " :No such channel\r\n");
@@ -49,15 +49,12 @@ void	TopicCommand::execute(Client &client, const std::string &params, Server &se
 			server.sendToClient(client.getFd(), ":ircserv 332 " + client.getNickname() + " " + chanName + " :" + chan->getTopic() + "\r\n");
 		return ;
 	}
-	
 	if (chan->isTopicRestricted() && !chan->isOperator(&client))
 	{
 		server.sendToClient(client.getFd(), ":ircserv 482 " + chanName + " :You're not channel operator\r\n");
 		return ;
 	}
-	
-	std::string newTopic = CommandHandler::getTrailing(params);
+	std::string	newTopic = CommandHandler::getTrailing(params);
 	chan->setTopic(newTopic);
-	
 	chan->broadcast(client.getPrefix() + " TOPIC " + chanName + " :" + newTopic + "\r\n", server);
 }

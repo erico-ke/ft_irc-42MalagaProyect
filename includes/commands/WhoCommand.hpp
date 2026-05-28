@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WhoCommand.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 14:39:15 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 14:40:06 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/28 09:09:20 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 
 # include "Command.hpp"
 
-class WhoCommand : public Command
+class	WhoCommand : public Command
 {
-private:
-	
-public:
-	void	execute(Client& client, const std::string& params, Server& server);
+	public:
+		void	execute(Client& client, const std::string& params, Server& server);
 };
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TopicCommand.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erico-ke <erico-ke@42malaga.student.com    +#+  +:+       +#+        */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:51:58 by erico-ke          #+#    #+#             */
-/*   Updated: 2026/05/26 10:55:02 by erico-ke         ###   ########.fr       */
+/*   Updated: 2026/05/28 09:09:15 by fracurul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "Command.hpp"
 
-class TopicCommand : public Command
+class	TopicCommand : public Command
 {
-public:
-	void	execute(Client &client, const std::string &params, Server &server);
+	public:
+		void	execute(Client &client, const std::string &params, Server &server);
 };
 
 #endif

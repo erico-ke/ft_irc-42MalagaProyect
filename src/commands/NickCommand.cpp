@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   NickCommand.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/28 10:01:41 by fracurul          #+#    #+#             */
+/*   Updated: 2026/05/28 11:25:01 by fracurul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/commands/NickCommand.hpp"
 #include "../../includes/Client.hpp"
 #include "../../includes/Server.hpp"
@@ -14,14 +26,12 @@ void	NickCommand::execute(Client& client, const std::string& params, Server& ser
 		return ;
 	}
 
-	Client*	nickUsed = server.getClientByNick(params);
+	Client	*nickUsed = server.getClientByNick(params);
 	if (nickUsed && nickUsed->getFd() != client.getFd())
 	{
 		server.sendToClient(client.getFd(), ":ircserv 433 * " + params + " :Nickname already in use\r\n");
 		return ;
 	}
-
-	
 	if (!client.passGiven())
 	{
 		server.sendToClient(client.getFd(), ":ircserv 464 :Expected PASS\r\n");

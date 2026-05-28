@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   UserCommand.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/28 10:01:17 by fracurul          #+#    #+#             */
+/*   Updated: 2026/05/28 10:01:18 by fracurul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/commands/UserCommand.hpp"
 #include "../../includes/Client.hpp"
 #include "../../includes/Server.hpp"
@@ -8,13 +20,14 @@ void	UserCommand::execute(Client& client, const std::string& params, Server& ser
 	if (client.isAuth())
 	{
 		server.sendToClient(client.getFd(), ":ircserv 462 " + client.getNickname() + " :You may not reregister\r\n");
-		return;
+		return ;
 	}
+
 	std::vector<std::string>	args = CommandHandler::splitParams(params);
 	if (args.size() < 1)
 	{
 		server.sendToClient(client.getFd(), ":ircserv 461 USER :Not enough parameters\r\n");
-		return;
+		return ;
 	}
 	if (!client.nickGiven())
 	{

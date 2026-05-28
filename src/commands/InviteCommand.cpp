@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   InviteCommand.cpp                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/28 10:01:58 by fracurul          #+#    #+#             */
+/*   Updated: 2026/05/28 10:11:26 by fracurul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/commands/InviteCommand.hpp"
 #include "../../includes/Client.hpp"
 #include "../../includes/Server.hpp"
@@ -8,18 +20,17 @@
 
 void	InviteCommand::execute(Client& client, const std::string& params, Server& server)
 {
-	if (!client.isAuth()) return;
+	if (!client.isAuth()) { return ; }
 
-	std::vector<std::string> args = CommandHandler::splitParams(params);
+	std::vector<std::string>	args = CommandHandler::splitParams(params);
 	if (args.size() < 2)
 	{
 		server.sendToClient(client.getFd(), ":ircserv 461 INVITE :Not enough parameters\r\n");
 		return ;
 	}
 
-	std::string targetNick = args[0];
-	std::string chanName   = args[1];
-
+	std::string	targetNick = args[0];
+	std::string	chanName = args[1];
 	Channel*	chan = server.getChannel(chanName);
 	if (!chan)
 	{
@@ -50,8 +61,6 @@ void	InviteCommand::execute(Client& client, const std::string& params, Server& s
 	}
 
 	chan->addInvite(target);
-
 	server.sendToClient(target->getFd(), client.getPrefix() + " INVITE " + targetNick + " :" + chanName + "\r\n");
-
 	server.sendToClient(client.getFd(), ":ircserv 341 " + client.getNickname() + " " + targetNick + " " + chanName + "\r\n");
 }

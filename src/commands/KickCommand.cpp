@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   KickCommand.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fracurul <fracurul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/28 10:01:49 by fracurul          #+#    #+#             */
+/*   Updated: 2026/05/28 11:24:10 by fracurul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/commands/KickCommand.hpp"
 #include "../../includes/Client.hpp"
 #include "../../includes/Server.hpp"
@@ -8,11 +20,11 @@
 
 void	KickCommand::execute(Client& client, const std::string& params, Server& server)
 {
-	if (!client.isAuth()) return ;
-	std::vector<std::string> args = CommandHandler::splitParams(params);
-	std::string reason = CommandHandler::getTrailing(params);
-	if (reason.empty()) reason = "Kicked";
+	if (!client.isAuth()) { return ; }
 
+	std::vector<std::string>	args = CommandHandler::splitParams(params);
+	std::string					reason = CommandHandler::getTrailing(params);
+	if (reason.empty()) { reason = "Kicked"; }
 	if (args.size() < 2)
 	{
 		server.sendToClient(client.getFd(), ":ircserv 461 KICK :Not enough parameters\r\n");
@@ -21,8 +33,7 @@ void	KickCommand::execute(Client& client, const std::string& params, Server& ser
 
 	std::string	chanName = args[0];
 	std::string	targetNick = args[1];
-
-	Channel	*chan = server.getChannel(chanName);
+	Channel		*chan = server.getChannel(chanName);
 	if (!chan)
 	{
 		server.sendToClient(client.getFd(), ":ircserv 403 " + chanName + " :No such channel\r\n");
